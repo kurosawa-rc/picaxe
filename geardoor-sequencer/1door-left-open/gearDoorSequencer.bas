@@ -1,6 +1,14 @@
 ;
 ; RC Gear door seaquencer for PICAXE 08M2
 ;
+; 1-door left-open seaquencer in M346 rc e-Jets.
+;
+; video of seaquencer:
+; http://youtu.be/fWwQTgveKxI
+;
+; M-346 64mm twin Red Color
+; http://kurosawa.e-rc.jp/plane?pc=1266K9vmNodb4EagPwp
+;
 ; Copyright (c) 2014 Hiroyuki Kurosawa
 ; http://kurosawa.e-rc.jp
 ;
