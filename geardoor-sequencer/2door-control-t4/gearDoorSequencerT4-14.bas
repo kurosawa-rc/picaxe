@@ -1,9 +1,16 @@
 ;
-; RC Gear door seaquencer-T4 for PICAXE 14M2
+; RC Gear door seaquencer-T4 for PICAXE 14M2 (2015/7/18 version 1.00)
 ;
 ; This is door seaquencer for KAWASAKI T4 retract gear.
 ; T-4 has doors of nose, body gear. body gear has 2-doors.
 ; This seaquencer control the body gear 2-doors by servo.
+; You can see video(Youtube) gear and door sequence.
+;
+; 	Kawasaki T4 Gear Door Sequencer PICAXE 14M2
+; 	https://youtu.be/qPIBussmqMQ
+;
+;	Circuit diagram(in Japanese):
+;	http://kurosawa.e-rc.jp/plane?bc=294qJNqV5n7d8
 ; 
 ; [main] control is nose and body front door together.
 ; [rear door] control is body rear door.
@@ -26,11 +33,29 @@
 ;
 ; You should have received a copy of the GNU General Public License
 ; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;
+;
+; Revision,
+;
+; 2015/7/18 
+; 	fixed bloken door(failed sequence) 2015/7/18 
+; 	out gear position same s/w postion for move gear(*1)
+; 	beacue not move gear up when following case.
+;  		1.gear DOWN, s/w DOWN
+;  		2.all door open
+;  		3.when s/w UP
+;  		4.gear UP(when not move this time) <- *1
+;  		5.proceed gear up procedure
+;     	  (main rear door closing, but this time(status) is gear down
+;      	  and bloken main rear door) 
+;
+; 2015/7/5 Add 2nd led for landing light.
 
 Setfreq M32
 
 ; Pins
 symbol LED_PIN = c.4 ; LED on/offout, ON when gear down complete like the landing light.
+symbol LED_PIN2 = c.1 ; LED on/offout, ON when gear down complete like the landing light.
 symbol DOOR_PIN = c.2 ; gear door(MAIN/NOSE) pulse out
 symbol GEAR_PIN = b.1 ; gear pulse out
 symbol SW_PIN = C.3 ; Gear switch pulse input 
@@ -332,6 +357,22 @@ main:
 				else 
 					gosub gearUp
 				endif
+			else 
+				; fixed bloken door(failed sequence) 2015/7/18 
+				; out gear position same s/w postion for move gear(*1)
+				; beacue not move gear up when following case.
+				;  1.gear DOWN, s/w DOWN
+				;  2.all door open
+				;  3.when s/w UP
+				;  4.gear UP(when not move this time) <- *1
+				;  5.proceed gear up procedure
+				;     (main rear door closing, but this time(status) is gear down
+				;      and bloken main rear door) 
+				if upDownGearSwitch = GEAR_SW_UP then
+					gosub gearUp
+				else 
+					gosub gearDown
+				endif
 			endif
 			
 			;initilize pulse out of door open
@@ -341,11 +382,11 @@ main:
 			else
 				countWaitStartSequece = 1
 			endif
-			statusGear = ST_INIT_WATING_START ;1: start wait for
+			statusGear = ST_INIT_WATING_START ;2: start wait for
 			
 		endif
 		
-	;2: init wait for start sequence and set status of star sequece
+	;2: init wait for start sequence and set status of start sequece
 	elseif statusGear = ST_INIT_WATING_START then 
 		;decrement count wait
 		countWaitStartSequece = countWaitStartSequece - 1;
@@ -367,7 +408,7 @@ main:
 
 			endif
 		endif
-	;3: gear down waiting for initilial when gear s/w si down. 
+	;3: gear down waiting for initilial when gear s/w is down. 
 	elseif statusGear = ST_INIT_WATING_GEAR_DOWN then 
 		countWaitStartSequece = countWaitStartSequece - 1;
 		if countWaitStartSequece <= 0 then
@@ -589,6 +630,7 @@ ledInit:
 	work1 = AVAILABLE_LED;
 	if work1 = 1 then
 		low LED_PIN
+		low LED_PIN2
 	endif
 	return	
 ;LED on
@@ -597,6 +639,7 @@ ledOn:
 	work1 = AVAILABLE_LED;
 	if work1 = 1 then
 		high LED_PIN
+		high LED_PIN2
 	endif
 	return
 ; LED off
@@ -604,6 +647,7 @@ ledOff:
 	work1 = AVAILABLE_LED;
 	if work1 = 1 then
 		low LED_PIN
+		low LED_PIN2
 	endif
 	return
 ; set wait count gear up/down
