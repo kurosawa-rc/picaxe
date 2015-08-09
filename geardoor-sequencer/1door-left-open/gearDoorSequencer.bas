@@ -1,5 +1,6 @@
 ;
 ; RC Gear door seaquencer for PICAXE 08M2
+;		2015/8/9 ver 1.01
 ;
 ; 1-door left-open seaquencer in M346 rc e-Jets.
 ;
@@ -24,6 +25,11 @@
 ;
 ; You should have received a copy of the GNU General Public License
 ; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;
+; Revision
+;
+;	2015/8/9 change gear reverse ON(GEAR_REVERSE=1) for retract gear.
+; 
 
 Setfreq M32
 
@@ -36,7 +42,7 @@ symbol LED_PIN = 4 ; LED on/offout
 ; Vaiables & Constant
 ;
 ; reverse
-symbol GEAR_REVERSE = 0 ; 1: reverse 0;non
+symbol GEAR_REVERSE = 1 ; 1: reverse 0;non
 symbol DOOR_REVERSE = 0 ; 1: reverse 0;non
 
 ; LED for Landing light
