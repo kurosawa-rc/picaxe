@@ -28,6 +28,7 @@
 ;
 ; Revision
 ;
+;	2015/8/23 change gear door reverse ON(DOOR_REVERSE = 1) for FUTABA S3101
 ;	2015/8/9 change gear reverse ON(GEAR_REVERSE=1) for retract gear.
 ; 
 
@@ -43,7 +44,7 @@ symbol LED_PIN = 4 ; LED on/offout
 ;
 ; reverse
 symbol GEAR_REVERSE = 1 ; 1: reverse 0;non
-symbol DOOR_REVERSE = 0 ; 1: reverse 0;non
+symbol DOOR_REVERSE = 1 ; 1: reverse 0;non
 
 ; LED for Landing light
 symbol isOnLED = w1
