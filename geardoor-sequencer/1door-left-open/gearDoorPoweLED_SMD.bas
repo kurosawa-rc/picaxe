@@ -10,10 +10,13 @@
 ; video of seaquencer:
 ; https://youtu.be/fWwQTgveKxI
 ;
+; flight video:
+; https://youtu.be/S9m3Q8LO02o
+
 ; M-346 64mm twin Red Color
 ; https://kurosawa.e-rc.jp/plane?pc=1266K9vmNodb4EagPwp
 ;
-; Copyright (c) 2014 Hiroyuki Kurosawa
+; Copyright (c) 2022 Hiroyuki Kurosawa
 ; http://kurosawa.e-rc.jp
 ;
 ; This program is free software: you can redistribute it and/or modify
