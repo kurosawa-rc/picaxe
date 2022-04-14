@@ -4,10 +4,10 @@
 ; gear s/w on/off the out pulse on(1msec)/off(2msec) for receiver input GEAR in gear door sequenser
 ; light s/w on/off the out pulse on(1msec)/off(2msec) for receiver input LIGHT in gear door sequenser
 ;
-; version 0.92 2022/02/09 kurosawa
+; version 0.93 2022/04/14 kurosawa
 ;
+;	0.93 add gear output reverse option(add symbol define)
 ;	0.92 reverse output pluse
-;
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
 ; the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +20,7 @@
 ;
 ; You should have received a copy of the GNU General Public License
 ; along with this program.  If not, see <http://www.gnu.org/licenses/>.
-;			
+;
 #Picaxe 08M2
 #No_Data
 
@@ -30,6 +30,9 @@ symbol LIGTH_OUT_PIN = 2 ; light pulseout
 
 symbol LIGHT_SW_PIN = pin3 ; light s/w in
 symbol GEAR_SW_PIN = pin4 ; gear s/w in
+
+; reverse
+symbol GEAR_OUTPUT_REVERSE = 1 ; 1: reverse 0;non
 
 ;gear pulse out value
 symbol pulseGear = w0
@@ -53,7 +56,7 @@ init:
 main:
 
 	; gear s/w ON ?  
-	if GEAR_SW_PIN = 0  then
+	if GEAR_SW_PIN = GEAR_OUTPUT_REVERSE  then
 		if pulseGear <> GEAR_MAX_POS then
 			pulseGear = GEAR_MAX_POS
 			servopos GEAR_OUT_PIN,pulseGear	
