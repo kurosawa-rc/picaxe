@@ -1,6 +1,6 @@
 ;
 ; RC Gear door seaquencer with Power LED(1Wx2) Controler for PICAXE 14M2.
-;		2021/10/13 ver 1.03 for SMD (production)
+;		2022/04/17 ver 1.04 for SMD (production)
 ;
 ; 1-door left-open seaquencer in M346 rc e-Jets.
 ; and Power LED(1Wx2) controler.
@@ -34,6 +34,7 @@
 ;
 ; Revision
 ;
+;	2022/04/17 reverse gear s/w input
 ;	2021/10/02 add Power LED(1Wx2, becon and strobe light) control. and chip change to 12M2 from 08M2.
 ;       	     multi task for strobe light at running 4MHz.
 ;
@@ -479,9 +480,9 @@ checkSwitchGear:
 	; check chattering
 	if work2 < 10 then
 		if pulseSwith < SERVO_NEUTRAL_POS then
-			upDownGearSwitch = GEAR_SW_UP
+			upDownGearSwitch = GEAR_SW_DOWN
 		elseif pulseSwith > GEAR_MIN_POS then 
-			upDownGearSwitch = GEAR_SW_DOWN	
+			upDownGearSwitch = GEAR_SW_UP	
 		endif
 	endif
 	return
